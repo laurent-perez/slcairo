@@ -1,0 +1,16 @@
+# cairo-deprecated.h
+# cairo-features.h
+# cairo-ft.h
+# cairo-gobject.h
+cairo.h
+cairo-pdf.h
+cairo-ps.h
+# cairo-script.h
+# cairo-script-interpreter.h
+cairo-svg.h
+# cairo-tee.h
+cairo-version.h
+# cairo-xcb.h
+# cairo-xlib.h
+# cairo-xlib-xrender.h
+ 

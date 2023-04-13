@@ -1,0 +1,137 @@
+% -*- slang -*-
+
+#define CAIRO_HAS_PNG_FUNCTIONS 1
+
+slirp_define_opaque ("Cairo", "void_ptr", "cairo_destroy");
+slirp_map_opaque ("cairo_t*");
+slirp_define_opaque ("CairoDevice", "void_ptr", "cairo_device_destroy");
+slirp_map_opaque ("cairo_device_t*");
+slirp_define_opaque ("CairoFontFace", "void_ptr", "cairo_font_face_destroy");
+slirp_map_opaque ("cairo_font_face_t*");
+slirp_define_opaque ("CairoFontOption", "void_ptr", "cairo_font_options_destroy");
+slirp_map_opaque ("cairo_font_options_t*");
+slirp_define_opaque ("CairoMatrix", "void_ptr");
+slirp_map_opaque ("cairo_matrix_t*");
+slirp_define_opaque ("CairoPath", "void_ptr", "cairo_path_destroy");
+slirp_map_opaque ("cairo_path_t*");
+slirp_define_opaque ("CairoPattern", "void_ptr", "cairo_pattern_destroy");
+slirp_map_opaque ("cairo_pattern_t*");
+slirp_define_opaque ("CairoRectangleList", "void_ptr", "cairo_rectangle_list_destroy");
+slirp_map_opaque ("cairo_rectangle_list_t*");
+slirp_define_opaque ("CairoRegion", "void_ptr", "cairo_region_destroy");
+slirp_map_opaque ("cairo_region_t*");
+slirp_define_opaque ("CairoScaled_Font", "void_ptr", "cairo_scaled_font_destroy");
+slirp_map_opaque ("cairo_scaled_font_t*");
+slirp_define_opaque ("CairoSurface", "void_ptr", "cairo_surface_destroy");
+slirp_map_opaque ("cairo_surface_t*");
+% slirp_define_opaque ("Cairo", "void_ptr");
+% slirp_map_opaque ("");
+
+slirp_map_int ("cairo_status_t");
+
+slirp_map_struct ("cairo_text_cluster_t*");
+slirp_map_struct ("cairo_font_extents_t*");
+slirp_map_struct ("cairo_glyph_t*");
+slirp_map_struct ("cairo_rectangle_t*");
+slirp_map_struct ("cairo_rectangle_int_t*");
+slirp_map_struct ("cairo_text_extents_t*");
+% slirp_map_struct ("*");
+
+returns_struct ["cairo_text_extents"] = [3];
+returns_struct ["cairo_font_extents"] = [2];
+returns_struct ["cairo_recording_surface_get_extents"] = [2];
+returns_struct ["cairo_region_get_extents"] = [2];
+returns_struct ["cairo_region_get_rectangle"] = [3];
+returns_struct ["cairo_scaled_font_extents"] = [2];
+returns_struct ["cairo_scaled_font_text_extents"] = [3];
+% returns_struct [""] = [];
+
+#ignore
+cairo_pattern_create_raster_source
+cairo_raster_source_pattern_set_callback_data
+cairo_raster_source_pattern_get_callback_data
+cairo_raster_source_pattern_set_acquire
+cairo_raster_source_pattern_get_acquire
+cairo_raster_source_pattern_set_snapshot
+cairo_raster_source_pattern_get_snapshot
+cairo_raster_source_pattern_set_copy
+cairo_raster_source_pattern_get_copy
+cairo_raster_source_pattern_set_finish
+cairo_raster_source_pattern_get_finish
+cairo_font_face_set_user_data
+cairo_font_face_get_user_data
+cairo_scaled_font_set_user_data
+cairo_scaled_font_get_user_data
+cairo_user_font_face_set_init_func
+cairo_user_font_face_get_init_func
+cairo_user_font_face_set_render_glyph_func
+cairo_user_font_face_get_render_glyph_func
+cairo_user_font_face_set_unicode_to_glyph_func
+cairo_user_font_face_get_unicode_to_glyph_func
+cairo_user_font_face_set_text_to_glyphs_func
+cairo_user_font_face_get_text_to_glyphs_func
+cairo_device_set_user_data
+cairo_device_get_user_data
+cairo_device_observer_print
+cairo_surface_set_user_data
+cairo_surface_get_user_data
+cairo_surface_set_mime_data
+cairo_surface_get_mime_data
+cairo_image_surface_create_for_data % coded manually
+cairo_image_surface_get_data % coded manually
+cairo_pdf_surface_create_for_stream
+cairo_pdf_get_versions % to code
+cairo_image_surface_create_from_png_stream
+cairo_surface_write_to_png_stream
+cairo_ps_surface_create_for_stream
+cairo_ps_get_levels % to code
+cairo_recording_surface_get_extents % to code : returns cstruct or null
+cairo_svg_surface_create_for_stream
+cairo_svg_get_versions % to code
+cairo_region_create_rectangles
+cairo_matrix_transform_distance % coded manually
+cairo_matrix_transform_point % coded manually
+cairo_user_to_device % coded manually
+cairo_user_to_device_distance % coded manually
+cairo_device_to_user % coded manually
+cairo_device_to_user_distance % coded manually
+cairo_glyph_allocate
+cairo_glyph_free
+cairo_show_glyphs % coded manually
+cairo_show_text_glyphs
+cairo_glyph_extents
+cairo_scaled_font_text_to_glyphs
+cairo_scaled_font_glyph_extents
+cairo_text_cluster_allocate
+cairo_text_cluster_free
+#end
+
+#argmap (in, which=1) cairo_pattern_t *pattern, cairo_surface_t **surface   
+#end
+
+#argmap (in, which=[1,2,4]) cairo_t *cr, const double *dashes, int num_dashes, double offset
+   $3 = ($3_type) $2_dim0;
+#end
+
+#argmap (out) double *x
+   $return;
+#end
+
+#copy double *x {double *y, double*dx, double *dy, double *x_offset, double *y_offset}
+#copy double *x {double *x_scale, double *y_scale, double *x_pixels_per_inch, double *y_pixels_per_inch}
+#copy double *x {double *x0, double *y0, double *width, double *height, int *count}
+#copy double *x {double *red, double *green, double *blue, double *alpha, double *offset}
+#copy double *x {double *x0, double *y0, double *x1, double *y1, double *x2, double *y2}
+#copy double *x {double *r0, double *r1, unsigned int *count, double *dashes}
+
+#argmap (out) cairo_surface_t **surface
+   (void) SLang_push_opaque (CairoSurface_Type, $1, 0);
+#end
+
+#retmap (omit) cairo_status_t
+   if (retval != CAIRO_STATUS_SUCCESS)
+     {
+	SLang_verror (Cairo_Error, "Cairo error : %s",
+		      cairo_status_to_string (retval));
+     }
+#end

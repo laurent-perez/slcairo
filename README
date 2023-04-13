@@ -1,0 +1,24 @@
+This is a S-Lang [1] module for cairo [2]
+Part of the module is generated using SLIRP [3] and some functions are
+wrapped by hands.
+
+INSTALL
+There is no configure script yet. You may have to modify the makefile
+according to your system. After issuing '.gencode' and 'make'
+commands, copy the resulting 'cairo-module.so' where other slang
+modules are installed (/usr/lib64/slang/v2/modules) and 'cairo.sl' to
+local packages directory (/usr/share/slsh/local-packages).
+
+DOC
+You should be able to use this module reading detailled cairo
+documentation and S-Lang scripts provided in examples directory.
+
+THANKS
+John Davis for writing S-Lang.
+Mike Noble for writing SLIRP
+Cairo team for writing cairo.
+
+LINKS
+[1] http://www.jedsoft.org/slang
+[2] https://www.cairographics.org/
+[3] https://space.mit.edu/cxc/software/slang/modules/slirp
